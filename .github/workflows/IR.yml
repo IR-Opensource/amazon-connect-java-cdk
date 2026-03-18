@@ -19,12 +19,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up JDK with AdoptOpenJDK (Adoptium)
+      # Set up JDK with Adoptium (formerly AdoptOpenJDK)
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'   # Specify your Java version
-          distribution: 'adoptopenjdk'  # or 'temurin'
+          java-version: '17'  # Specify your Java version
+          distribution: 'temurin'  # Correct distribution for Adoptium (formerly AdoptOpenJDK)
 
       # Install dependencies and build with Maven
       - name: Install dependencies and build
