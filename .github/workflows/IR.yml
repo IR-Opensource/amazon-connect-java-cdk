@@ -1,4 +1,4 @@
-name: Java Maven Build
+name: Java Maven Build with InvisiRisk PSE
 
 on:
   workflow_dispatch:
@@ -12,21 +12,28 @@ jobs:
       - name: Setup PSE
         uses: invisirisk/pse-action@latest
         with:
-          app_token: ${{secrets.IR_API_KEY}}
+          app_token: ${{ secrets.IR_API_KEY }}
       # ============= InvisiRisk Setup End =============
+
       # Checkout the code from the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up Java (latest version)
+      # Set up JDK with AdoptOpenJDK (Adoptium)
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'  # Specify your required Java version here (e.g., 11, 17)
+          java-version: '17'   # Specify your Java version
+          distribution: 'adoptopenjdk'  # or 'temurin'
 
-      # Install dependencies and build project
+      # Install dependencies and build with Maven
       - name: Install dependencies and build
         run: mvn install --no-transfer-progress
+
+      # Run tests
+      - name: Run tests
+        run: mvn test
+
       # ============= InvisiRisk Cleanup =============
       - name: Cleanup PSE
         if: always()
